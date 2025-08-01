@@ -7,7 +7,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class TokenVeryficationMiddleware
+class TokenVerificationMiddleware
 {
     /**
      * Handle an incoming request.

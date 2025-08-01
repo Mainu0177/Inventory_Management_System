@@ -1,7 +1,8 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\UserController;
-use App\Http\Middleware\TokenVeryficationMiddleware;
+use App\Http\Middleware\TokenVerificationMiddleware;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
@@ -18,11 +19,19 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::post('/user-registration', [UserController::class, 'UserRegistration'])->name('UserRegistration');
 Route::post('/user-login', [UserController::class, 'UserLogin'])->name('user.login');
 Route::get('/user-logout', [UserController::class, 'UserLogout'])->name('user.logout');
-Route::get('/dashboardPage', [UserController::class, 'DashboardPage'])->middleware([TokenVeryficationMiddleware::class])->name('dashboard.page');
+Route::get('/dashboardPage', [UserController::class, 'DashboardPage'])->middleware([TokenVerificationMiddleware::class])->name('dashboard.page');
 
 //send otp
 Route::post('/send-otp', [UserController::class, 'SendOtpCode'])->name('send.otp');
 Route::post('/verify-otp', [UserController::class, 'VerifyOtp'])->name('verify.otp');
-Route::post('/reset-password', [UserController::class, 'ResetPassword'])->middleware([TokenVeryficationMiddleware::class]);
+Route::post('/reset-password', [UserController::class, 'ResetPassword'])->middleware([TokenVerificationMiddleware::class]);
 
-
+// Make Route group
+Route::middleware(TokenVerificationMiddleware::class)->group(function () {
+    // Category all routes
+    Route::controller(CategoryController::class)->group(function () {
+        Route::post('/create-category', 'CreateCategory')->name('category.create');
+        Route::get('/list-category', 'ListCategory')->name('list.create');
+        Route::post('/category-details-by-id', 'CategoryDetailsById')->name('category.details');
+    });
+});
