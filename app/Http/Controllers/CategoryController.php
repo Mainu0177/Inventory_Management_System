@@ -23,8 +23,8 @@ class CategoryController extends Controller
         } catch (Exception $e) {
             return response()->json([
                 'status' => "Failed",
-                'message' => "Something went wrong, Please try again later",
-            ]);
+                'message' => "Category dose not created, Please try again later",
+            ], 500);
         }
     } // end method
 
@@ -61,5 +61,51 @@ class CategoryController extends Controller
                 'message' => "Category not found",
             ]);
         }
+    }// end method
+
+    public function UpdateCategory(Request $request){
+        try {
+            $user_id = $request->header('id');
+            $updateCategory = Category::where('id', $request->input('id'))->where('user_id', $user_id)->update([
+            'name' => $request->name
+        ]);
+            return response()->json([
+                'status' => "Success",
+                'message' => "Category Updated Successfully",
+                'data' => $updateCategory
+        ],200);
+            } catch (Exception $e) {
+                return response()->json([
+                    'status' => "Failed",
+                    'message' => "Category not updated, Please try again later",
+                ],500);
+            }
     }
+
+    // public function DeleteCategory(Request $request){
+    //     try {
+    //         $user_id = $request->header('id');
+    //         $deleteCategory = Category::where('id', $request->input('id'))->where('user_id', $user_id)->delete();
+    //         return response()->json([
+    //             'status' => "Success",
+    //             'message' => "Category Deleted Successfully",
+    //             'data' => $deleteCategory
+    //         ],200);
+    //     } catch (Exception $e) {
+    //         return response()->json([
+    //             'status' => "Failed",
+    //             'message' => "Category dose not deleted, Please try again later",
+    //         ],500);
+    //     }
+    // }// end method
+
+    // alternative system for delete
+    public function DeleteCategory(Request $request, $id){
+        $user_id = $request->header('id');
+        Category::where('id', $id)->where('user_id', $user_id)->delete();
+        return response()->json([
+            'status' => "Success",
+            'message' => "Category Deleted Successfully",
+        ],200);
+    }// end method
 }

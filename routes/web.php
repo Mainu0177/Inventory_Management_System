@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\TokenVerificationMiddleware;
 use Inertia\Inertia;
@@ -33,5 +34,13 @@ Route::middleware(TokenVerificationMiddleware::class)->group(function () {
         Route::post('/create-category', 'CreateCategory')->name('category.create');
         Route::get('/list-category', 'ListCategory')->name('list.create');
         Route::post('/category-details-by-id', 'CategoryDetailsById')->name('category.details');
+        Route::post('/update-category', 'UpdateCategory')->name('category.update');
+        // Route::delete('/delete-category', 'DeleteCategory')->name('category.delete');
+        Route::get('/delete-category/{id}', 'DeleteCategory')->name('category.delete');
+    });
+
+    // Product all routes
+    Route::controller(ProductController::class)->group(function () {
+        Route::post('/create-product', 'CreateProduct')->name('product.create');
     });
 });
