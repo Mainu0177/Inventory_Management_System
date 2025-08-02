@@ -19,11 +19,13 @@ class CategoryController extends Controller
         return response()->json([
             'status' => "Success",
             'message' => "Category Created Successfully",
+
         ],200);
         } catch (Exception $e) {
             return response()->json([
                 'status' => "Failed",
-                'message' => "Category dose not created, Please try again later",
+                // 'message' => "Category dose not created, Please try again later",
+                'message' => $e->getMessage(),
             ], 500);
         }
     } // end method
@@ -31,7 +33,7 @@ class CategoryController extends Controller
     public function ListCategory(Request $request){
         try {
             $user_id = $request->header('id');
-            $category = Category::where('user_id', $user_id)->get();
+            $category = Category::where('user_id', $user_id)->with('products')->get();
             return response()->json([
                 'status' => "Success",
                 'category' => $category,
