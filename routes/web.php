@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
@@ -62,5 +63,15 @@ Route::middleware(TokenVerificationMiddleware::class)->group(function () {
     // Invoice all routes
     Route::controller(InvoiceController::class)->group(function () {
         Route::post('/create-invoice', 'CreateInvoice')->name('create.invoice');
+        Route::get('/invoice-list', 'InvoiceList')->name('invoice.list');
+        Route::post('/invoice-details', 'InvoiceDetails')->name('invoice.details');
+        Route::get('/invoice-delete/{id}', 'InvoiceDelete')->name('invoice.delete');
     });
+
+    // Dashboard Summary
+    Route::get('dashboard-summary', [DashboardController::class, 'DashboardController'])->name('dashboard.summary');
+
+    // Profile update
+    Route::post('user-profile-update', [UserController::class, 'UserUpdate'])->name('dashboard.summary');
+
 });

@@ -142,4 +142,30 @@ class UserController extends Controller
             ],500);
         }
     }// end method for reset password
+
+    public function UserUpdate(Request $request){
+        $user_email = $request->header('email');
+        $new_email = $request->input('email');
+
+        $user = User::where('email', $user_email)->first();
+
+        $user->update([
+            'name' => $request->input('name'),
+            'email' => $new_email,
+            'phone' => $request->input('phone'),
+        ]);
+
+        if($user_email !== $new_email){
+            return response()->json([
+                'status' => 'Success',
+                'message' => 'user updated successfully. You have been logged out due to email change.',
+            ])->cookie('token', '', -1);
+        }
+
+        return response()->json([
+            'status' => 'Success',
+            'message' => 'user updated successfully.'
+        ]);
+
+    }// end method for user profile update
 }
