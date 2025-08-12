@@ -8,6 +8,7 @@ use App\Mail\MailOtp;
 use App\helper\JWTToken;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Inertia\Inertia;
 
 class UserController extends Controller
 {
@@ -29,16 +30,29 @@ class UserController extends Controller
                 'password' => $request->password,
             ]);
 
-            return response()->json([
+            // return response()->json([
+            //     'status' => true,
+            //     'message' => 'User Registration successfully',
+            //     'data' => $user
+            // ]);
+            $data = [
                 'status' => true,
                 'message' => 'User Registration successfully',
-                'data' => $user
-            ]);
+                'error' => '',
+            ];
+            return redirect('/login')->with($data);
         } catch (Exception $e) {
-            return response()->json([
+            // return response()->json([
+            //     'status' => false,
+            //     'message' => 'Registration failed',
+            //     // 'message' => $e->getMessage(),
+            // ],500);
+            $data = [
                 'status' => false,
                 'message' => 'Registration failed',
-            ],500);
+                'error' => ''
+            ];
+            return redirect('/registration')->with($data);
         }
     } // end method for user registration
 
@@ -50,18 +64,35 @@ class UserController extends Controller
 
             if($count !== null){
                 // user login jwt token issue
-                $token = JWTToken::CreateToken($request->input('email'), $count->id);
+                // $token = JWTToken::CreateToken($request->input('email'), $count->id);
 
-                return response()->json([
-                    'status' => 'success',
+                $email = $request->input('email');
+                $user_id = $count->id;
+
+
+                // return response()->json([
+                //     'status' => 'success',
+                //     'message' => 'User login successfully',
+                //     'token' => $token,
+                // ], 200)->cookie('token', $token, time()+60);
+
+                $request->session()->put('email', $email);
+                $request->session()->put('user_id', $user_id);
+
+                $data = [
+                    'status' => true,
                     'message' => 'User login successfully',
-                    'token' => $token,
-                ], 200)->cookie('token', $token, time()+60);
+                    'error' => '',
+                ];
+            return redirect('/dashboardPage')->with($data);
+
             }else{
-                return response()->json([
-                    'status' => 'failed',
+                $data = [
+                    'status' => false,
                     'message' => 'User login failed',
-                ], 401);
+                    'error' => '',
+                ];
+            return redirect('login')->with($data);
             }// end condition
 
     }// end method for user login
@@ -75,11 +106,13 @@ class UserController extends Controller
 
     public function DashboardPage(Request $request){
         $user = $request->header('email');
-        return response()->json([
-            'status' => 'success',
-            'message' => 'User Login Successfully',
-            'user' => $user
-        ],200);
+
+        // return response()->json([
+        //     'status' => 'success',
+        //     'message' => 'User Login Successfully',
+        //     'user' => $user
+        // ],200);
+        return Inertia::render('DashboardPage', ['user' => $user]);
     }// end method for user dashboard
 
     public function SendOtpCode(Request $request){
@@ -168,4 +201,12 @@ class UserController extends Controller
         ]);
 
     }// end method for user profile update
+
+
+    public function LoginPage(){
+        return Inertia::render('LoginPage');
+    }
+    public function RegistrationPage(){
+        return Inertia::render('RegistrationPage');
+    }
 }

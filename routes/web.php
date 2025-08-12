@@ -6,6 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
+use App\Http\Middleware\SessionAuthenticate;
 use App\Http\Middleware\TokenVerificationMiddleware;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
@@ -16,14 +17,15 @@ Route::get('/', function () {
     return Inertia::render('TestPage');
 });
 
-Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home.Page');
+Route::get('/Home', [HomeController::class, 'HomePage'])->name('Home');
 
 
 // All user Routes
 Route::post('/user-registration', [UserController::class, 'UserRegistration'])->name('UserRegistration');
 Route::post('/user-login', [UserController::class, 'UserLogin'])->name('user.login');
 Route::get('/user-logout', [UserController::class, 'UserLogout'])->name('user.logout');
-Route::get('/dashboardPage', [UserController::class, 'DashboardPage'])->middleware([TokenVerificationMiddleware::class])->name('dashboard.page');
+Route::get('/dashboardPage', [UserController::class, 'DashboardPage'])->middleware([SessionAuthenticate::class])->name('dashboard.page');
 
 //send otp
 Route::post('/send-otp', [UserController::class, 'SendOtpCode'])->name('send.otp');
@@ -75,3 +77,7 @@ Route::middleware(TokenVerificationMiddleware::class)->group(function () {
     Route::post('user-profile-update', [UserController::class, 'UserUpdate'])->name('dashboard.summary');
 
 });
+
+// Front end all route
+Route::get('/login', [UserController::class, 'LoginPage'])->name('login.page');
+Route::get('/registration', [UserController::class, 'RegistrationPage'])->name('RegistrationPage');

@@ -1,7 +1,7 @@
 import { router } from '@inertiajs/vue3'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './bootstrap';
-
+import './Assets/css/main.css';
 import { createApp, h } from 'vue'
 import { createInertiaApp } from '@inertiajs/vue3'
 
