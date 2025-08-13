@@ -1,12 +1,13 @@
 <template>
     <NavLayout>
-        <RegistrationForm/>
+        <VerifyOtpForm/>
     </NavLayout>
 </template>
 
 <script setup>
 import NavLayout from '../layout/NavLayout.vue';
-import RegistrationForm from '../Components/User/RegistrationForm.vue';
+import VerifyOtpForm from '../Components/User/VerifyOtpForm.vue';
+
 
 </script>
 

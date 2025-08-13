@@ -104,17 +104,6 @@ class UserController extends Controller
         ], 200)->cookie('token', '', -1);
     }// end method for user logout
 
-    public function DashboardPage(Request $request){
-        $user = $request->header('email');
-
-        // return response()->json([
-        //     'status' => 'success',
-        //     'message' => 'User Login Successfully',
-        //     'user' => $user
-        // ],200);
-        return Inertia::render('DashboardPage', ['user' => $user]);
-    }// end method for user dashboard
-
     public function SendOtpCode(Request $request){
         $email = $request->input('email');
         // send otp to user email
@@ -124,55 +113,112 @@ class UserController extends Controller
         if($count == 1){
             Mail::to($email)->send(new MailOtp($otp));
             User::where('email', $email)->update(['otp' => $otp]);
-            return response()->json([
-                'status' => 'success',
+
+            $request->session()->put('email', $email);
+            // return response()->json([
+            //     'status' => 'success',
+            //     'message' => "4 Digit {$otp}  Code has been sent to your email",
+            // ],200);
+            $data = [
+                'status' => true,
                 'message' => "4 Digit {$otp}  Code has been sent to your email",
-            ],200);
+                'error' => '',
+            ];
+            return redirect('/registration')->with($data);
         }else{
-            return response()->json([
-                'status' => 'failed',
-                'message' => 'Email not found',
-            ],404);
+            // return response()->json([
+            //     'status' => 'failed',
+            //     'message' => 'Email not found',
+            // ],404);
+            $data = [
+                'status' => false,
+                'message' => 'Unauthorized email',
+                'error' => '',
+            ];
+            return redirect('/send-otp')->with($data);
         }
     }// end method for send otp
 
     public function VerifyOtp(Request $request){
-        $email = $request->input('email');
+        // $email = $request->input('email');
+        $email = $request->session()->get('email', 'default');
         $otp = $request->input('otp');
 
         $count = User::where('email', $email)->where('otp', $otp)->count();
-        $token = JWTToken::CreateTokenForSetPassword($email);
 
         if($count == 1){
             User::where('email', $email)->update(['otp' => 0]);
+            // $token = JWTToken::CreateTokenForSetPassword($email);
 
-            return response()->json([
-                'status' => 'success',
-                'message' => 'OTP verified successfully',
-            ], 200)->cookie('token', $token, 60*24*30);
+        $request->session()->put('otp_verify', 'yes');
+
+
+            // return response()->json([
+            //     'status' => 'success',
+            //     'message' => 'OTP verified successfully',
+            // ], 200)->cookie('token', $token, 60*24*30);
+            $data = [
+                'status' => true,
+                'message' => 'OTP verification successfully',
+                'error' => '',
+            ];
+            return redirect('/reset-password')->with($data);
         }else{
-            return response()->json([
-                'status' => 'failed',
-                'message' => 'OTP verified failed',
-            ],401);
+            // return response()->json([
+            //     'status' => 'failed',
+            //     'message' => 'OTP verified failed',
+            // ],401);
+            $data = [
+                'status' => false,
+                'message' => 'OTP verification failed',
+                'error' => ''
+            ];
+            return redirect('/login')->with($data);
         }
     }// end method for verify otp
 
     public function ResetPassword(Request $request){
         try {
-            $email = $request->header('email');
+            // $email = $request->header('email');
+            $email = $request->session()->get('email', 'default');
             $password = $request->input('password');
-            User::where('email', $email)->update(['password' => $password]);
 
-            return response()->json([
-                'status' => 'success',
+            $otp_verify = $request->session()->get('otp_verify', 'default');
+            if($otp_verify === 'yes'){
+                User::where('email', $email)->update(['password' => $password]);
+                $request->session()->flush();
+
+                $data = [
+                'status' => true,
                 'message' => 'Password reset successfully',
-            ], 200);
+                'error' => '',
+            ];
+                return redirect('/login')->with($data);
+            }else{
+                $data = [
+                'status' => false,
+                // 'message' => 'Something went wrong, Please try again later',
+                'message' => 'Password does not reset, Please try again later',
+                'error' => '',
+            ];
+                return redirect('/reset-password')->with($data);
+            }
+
+            // return response()->json([
+            //     'status' => 'success',
+            //     'message' => 'Password reset successfully',
+            // ], 200);
         } catch (Exception $e) {
-            return response()->json([
-                'status' => 'failed',
+            // return response()->json([
+            //     'status' => 'failed',
+            //     'message' => 'Something went wrong, Please try again later',
+            // ],500);
+            $data = [
+                'status' => false,
                 'message' => 'Something went wrong, Please try again later',
-            ],500);
+                'error' => '',
+            ];
+                return redirect('/reset-password')->with($data);
         }
     }// end method for reset password
 
@@ -208,5 +254,14 @@ class UserController extends Controller
     }
     public function RegistrationPage(){
         return Inertia::render('RegistrationPage');
+    }
+    public function SendOtpPage(){
+        return Inertia::render('SendOtpPage');
+    }
+    public function VerifyOtpPage(){
+        return Inertia::render('VerifyOtpPage');
+    }
+    public function ResetPasswordPage(){
+        return Inertia::render('ResetPasswordPage');
     }
 }

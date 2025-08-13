@@ -25,12 +25,12 @@ Route::get('/Home', [HomeController::class, 'HomePage'])->name('Home');
 Route::post('/user-registration', [UserController::class, 'UserRegistration'])->name('UserRegistration');
 Route::post('/user-login', [UserController::class, 'UserLogin'])->name('user.login');
 Route::get('/user-logout', [UserController::class, 'UserLogout'])->name('user.logout');
-Route::get('/dashboardPage', [UserController::class, 'DashboardPage'])->middleware([SessionAuthenticate::class])->name('dashboard.page');
+Route::get('/dashboardPage', [DashboardController::class, 'DashboardPage'])->middleware([SessionAuthenticate::class])->name('dashboard.page');
 
 //send otp
 Route::post('/send-otp', [UserController::class, 'SendOtpCode'])->name('send.otp');
 Route::post('/verify-otp', [UserController::class, 'VerifyOtp'])->name('verify.otp');
-Route::post('/reset-password', [UserController::class, 'ResetPassword'])->middleware([TokenVerificationMiddleware::class]);
+Route::post('/reset-password', [UserController::class, 'ResetPassword'])->middleware([SessionAuthenticate::class]);
 
 // Make Route group
 Route::middleware(TokenVerificationMiddleware::class)->group(function () {
@@ -81,3 +81,6 @@ Route::middleware(TokenVerificationMiddleware::class)->group(function () {
 // Front end all route
 Route::get('/login', [UserController::class, 'LoginPage'])->name('login.page');
 Route::get('/registration', [UserController::class, 'RegistrationPage'])->name('RegistrationPage');
+Route::get('/send-otp', [UserController::class, 'SendOtpPage'])->name('SendOtpPage');
+Route::get('/verify-otp', [UserController::class, 'VerifyOtpPage'])->name('VerifyOtpPage');
+Route::get('/reset-password', [UserController::class, 'ResetPasswordPage'])->name('ResetPasswordPage')->middleware([SessionAuthenticate::class]);

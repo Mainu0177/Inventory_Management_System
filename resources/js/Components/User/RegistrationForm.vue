@@ -70,7 +70,7 @@ function submit(){
         toaster.warning("Email is required");
     } else if (form.phone.length === 0) {
         toaster.warning("Phone is required");
-    } else if (form.password === 0) {
+    } else if (form.password.length === 0) {
         toaster.warning("Password is required");
     } else if (form.password !== form.cpassword) {
         toaster.warning("Password and Confirm Password do not match");
