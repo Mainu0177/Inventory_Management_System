@@ -17,40 +17,40 @@
                 <span class="side-bar-item-caption">Dashboard</span>
             </Link>
 
-            <Link href="categoryPage" class="side-bar-item">
+            <Link href="/categoryPage" class="side-bar-item">
                 <span class="side-bar-item-icon"><i class="fa fa-th-list text-green"></i></span>
                 <span class="side-bar-item-caption">Category</span>
             </Link>
 
-            <a href="customer-list.html" class="side-bar-item">
+            <Link href="customer-list.html" class="side-bar-item">
                 <span class="side-bar-item-icon"><i class="fa fa-users text-green"></i></span>
                 <span class="side-bar-item-caption">Customer</span>
-            </a>
+            </Link>
 
-            <a href="product-list.html" class="side-bar-item">
+            <Link href="/ProductPage" class="side-bar-item">
                 <span class="side-bar-item-icon"><i class="fa fa-box text-green"></i></span>
                 <span class="side-bar-item-caption">Product</span>
-            </a>
+            </Link>
 
-            <a href="salePage.html" class="side-bar-item">
+            <Link href="salePage.html" class="side-bar-item">
                 <span class="side-bar-item-icon"><i class="fa fa-shopping-cart text-green"></i></span>
                 <span class="side-bar-item-caption">Create Sale</span>
-            </a>
+            </Link>
 
-            <a href="invoiceList.html" class="side-bar-item">
+            <Link href="invoiceList.html" class="side-bar-item">
                 <span class="side-bar-item-icon"><i class="fa fa-file-invoice-dollar text-green"></i></span>
                 <span class="side-bar-item-caption">Invoice</span>
-            </a>
+            </Link>
 
-            <a href="profileForm.html" class="side-bar-item">
+            <Link href="profileForm.html" class="side-bar-item">
                 <span class="side-bar-item-icon"><i class="fa fa-user-circle text-green"></i></span>
                 <span class="side-bar-item-caption">Profile</span>
-            </a>
+            </Link>
 
-            <a href="" class="side-bar-item">
+            <Link href="" class="side-bar-item">
                 <span class="side-bar-item-icon"><i class="fa fa-sign-out-alt text-green"></i></span>
                 <span class="side-bar-item-caption">Logout</span>
-            </a>
+            </Link>
 
         </div>
         <div id="content" class="content">

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
 use Exception;
+use Inertia\Inertia;
+use App\Models\Product;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -45,16 +47,28 @@ class ProductController extends Controller
 
             Product::create($data);
 
-            return response()->json([
-                'status' => "Success",
+            // return response()->json([
+            //     'status' => "Success",
+            //     'message' => "Product Created Successfully",
+            // ],200);
+            $data = [
+                'status' => true,
                 'message' => "Product Created Successfully",
-            ],200);
+                'error' => ''
+            ];
+            return redirect('/ProductPage')->with($data);
         } catch (Exception $e) {
-            return response()->json([
-                'status' => "Failed",
-                // 'message' => "Product not created, Please try again later",
-                'message' => $e->getMessage(),
-            ]);
+            // return response()->json([
+            //     'status' => "Failed",
+            //     // 'message' => "Product not created, Please try again later",
+            //     'message' => $e->getMessage(),
+            // ]);
+            $data = [
+                'status' => false,
+                'message' => "Product not created, Please try again later",
+                'error' => ''
+            ];
+            return redirect('/ProductSavePage')->with($data);
         }
     } // end method
 
@@ -62,16 +76,16 @@ class ProductController extends Controller
         try {
             $user_id = $request->header('id');
             $allProduct = Product::where('user_id', $user_id)->get();
-            return response()->json([
-                'status' => 'Success',
-                'message' => "All Product found",
-                'data' => $allProduct
-            ]);
+            // return response()->json([
+            //     'status' => 'Success',
+            //     'message' => "All Product found",
+            //     'data' => $allProduct
+            // ]);
         } catch (Exception $e) {
-            return response()->json([
-                'status' => 'Failed',
-                'message' => "Product does not found"
-            ]);
+            // return response()->json([
+            //     'status' => 'Failed',
+            //     'message' => "Product does not found"
+            // ]);
         }
     }// end method
 
@@ -124,17 +138,29 @@ class ProductController extends Controller
                 $product->image = $filePath;
             }
             $product->save();
-            return response()->json([
-                'status' => "Success",
+            // return response()->json([
+            //     'status' => "Success",
+            //     'message' => "Product Updated Successfully",
+            //     'data' => $product
+            // ],200);
+            $data = [
+                'status' => true,
                 'message' => "Product Updated Successfully",
-                'data' => $product
-            ],200);
+                'error' => ''
+            ];
+            return redirect('/ProductPage')->with($data);
         } catch (Exception $e) {
-            return response()->json([
-                'status' => "Success",
+            // return response()->json([
+            //     'status' => "Success",
+            //     'message' => "Product dose not Updated, please try again later",
+            //     // 'message' => $e->getMessage(),
+            // ], 500);
+            $data = [
+                'status' => false,
                 'message' => "Product dose not Updated, please try again later",
-                // 'message' => $e->getMessage(),
-            ], 500);
+                'error' => ''
+            ];
+            return redirect('/ProductSavePage')->with($data);
         }
     }// end method
     public function ProductDelete(Request $request, $id){
@@ -146,16 +172,45 @@ class ProductController extends Controller
                     unlink(public_path($product->image));
                 }
             $product->delete();
-            return response()->json([
-                'status' => 'Success',
-                'message' => "Product deleted Successfully"
-            ], 200);
+            // return response()->json([
+            //     'status' => 'Success',
+            //     'message' => "Product deleted Successfully"
+            // ], 200);
+            $data = [
+                'status' => true,
+                'message' => "Product deleted Successfully",
+                'error' => ''
+            ];
+            return redirect()->back()->with($data);
         } catch (Exception $e) {
-            return response()->json([
-                'status' => "Failed",
+            // return response()->json([
+            //     'status' => "Failed",
+            //     'message' => "Product dose not deleted, please try again later",
+            //     // 'message' => $e->getMessage(),
+            // ], 500);
+            $data = [
+                'status' => false,
                 'message' => "Product dose not deleted, please try again later",
-                // 'message' => $e->getMessage(),
-            ], 500);
+                'error' => ''
+            ];
+            return redirect()->back()->with($data);
         }
     }// end method
+
+    public function ProductPage(){
+        $user_id = request()->header('id');
+
+        $products = Product::where('user_id', $user_id)->with('category')->latest()->get();
+        return Inertia::render('ProductPage', ['products' => $products]);
+    }
+
+    public function ProductSavePage(Request $request){
+        $user_id = request()->header('id');
+
+        $categories = Category::where('user_id', $user_id)->get();
+
+        $product = Product::where('id', $request->query('id'))->where('user_id', $user_id)->first();
+
+        return Inertia::render('ProductSavePage', ['categories' => $categories, 'product' => $product]);
+    }
 }
