@@ -33,7 +33,7 @@ Route::post('/verify-otp', [UserController::class, 'VerifyOtp'])->name('verify.o
 Route::post('/reset-password', [UserController::class, 'ResetPassword'])->middleware([SessionAuthenticate::class]);
 
 // Make Route group
-Route::middleware(TokenVerificationMiddleware::class)->group(function () {
+Route::middleware(SessionAuthenticate::class)->group(function () {
     // Category all routes
     Route::controller(CategoryController::class)->group(function () {
         Route::post('/create-category', 'CreateCategory')->name('category.create');
@@ -42,6 +42,9 @@ Route::middleware(TokenVerificationMiddleware::class)->group(function () {
         Route::post('/update-category', 'UpdateCategory')->name('category.update');
         // Route::delete('/delete-category', 'DeleteCategory')->name('category.delete');
         Route::get('/delete-category/{id}', 'DeleteCategory')->name('category.delete');
+
+        Route::get('/categoryPage', 'CategoryPage')->name('category.page');
+        Route::get('/CategorySavePage', 'CategorySavePage')->name('CategorySavePage');
     });
 
     // Product all routes

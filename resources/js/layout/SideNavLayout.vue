@@ -12,15 +12,15 @@
                 <img alt="" class="side-nav-logo" src="./Assets/img/logo.svg" />
             </div>
 
-            <a href="/dashboardPage" class="side-bar-item">
+            <Link href="/dashboardPage" class="side-bar-item">
                 <span class="side-bar-item-icon"><i class="fa fa-tachometer-alt text-green"></i></span>
                 <span class="side-bar-item-caption">Dashboard</span>
-            </a>
+            </Link>
 
-            <a href="category-list.html" class="side-bar-item">
+            <Link href="categoryPage" class="side-bar-item">
                 <span class="side-bar-item-icon"><i class="fa fa-th-list text-green"></i></span>
                 <span class="side-bar-item-caption">Category</span>
-            </a>
+            </Link>
 
             <a href="customer-list.html" class="side-bar-item">
                 <span class="side-bar-item-icon"><i class="fa fa-users text-green"></i></span>
@@ -68,6 +68,7 @@
 </template>
 
 <script setup>
+import { Link } from '@inertiajs/vue3';
 </script>
 
 <style scoped>

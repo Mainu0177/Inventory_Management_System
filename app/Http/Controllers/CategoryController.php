@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use Exception;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class CategoryController extends Controller
 {
@@ -16,17 +17,29 @@ class CategoryController extends Controller
             'name' => $request->name,
             'user_id' => $user_id,
         ]);
-        return response()->json([
-            'status' => "Success",
+        // return response()->json([
+        //     'status' => "Success",
+        //     'message' => "Category Created Successfully",
+        // ],200);
+        $data = [
+            'status' => true,
             'message' => "Category Created Successfully",
-
-        ],200);
+            'error' => ''
+        ];
+        return redirect('/categoryPage')->with($data);
         } catch (Exception $e) {
-            return response()->json([
-                'status' => "Failed",
-                // 'message' => "Category dose not created, Please try again later",
-                'message' => $e->getMessage(),
-            ], 500);
+            // return response()->json([
+            //     'status' => "Failed",
+            //     // 'message' => "Category dose not created, Please try again later",
+            //     'message' => $e->getMessage(),
+            // ], 500);
+
+            $data = [
+                'status' => false,
+                'message' => "Category dose not created, Please try again later",
+                'error' => ''
+            ];
+            return redirect('/categoryPage')->with($data);
         }
     } // end method
 
@@ -68,19 +81,31 @@ class CategoryController extends Controller
     public function UpdateCategory(Request $request){
         try {
             $user_id = $request->header('id');
-            $updateCategory = Category::where('id', $request->input('id'))->where('user_id', $user_id)->update([
+            Category::where('id', $request->input('id'))->where('user_id', $user_id)->update([
             'name' => $request->name
         ]);
-            return response()->json([
-                'status' => "Success",
+        //     return response()->json([
+        //         'status' => "Success",
+        //         'message' => "Category Updated Successfully",
+        //         'data' => $updateCategory
+        // ],200);
+            $data = [
+                'status' => true,
                 'message' => "Category Updated Successfully",
-                'data' => $updateCategory
-        ],200);
+                'error' => ''
+            ];
+            return redirect('/categoryPage')->with($data);
             } catch (Exception $e) {
-                return response()->json([
-                    'status' => "Failed",
-                    'message' => "Category not updated, Please try again later",
-                ],500);
+                // return response()->json([
+                //     'status' => "Failed",
+                //     'message' => "Category not updated, Please try again later",
+                // ],500);
+            $data = [
+                'status' => false,
+                'message' => "Category not updated, Please try again later",
+                'error' => ''
+            ];
+            return redirect('/categoryPage')->with($data);
             }
     }
 
@@ -105,9 +130,34 @@ class CategoryController extends Controller
     public function DeleteCategory(Request $request, $id){
         $user_id = $request->header('id');
         Category::where('id', $id)->where('user_id', $user_id)->delete();
-        return response()->json([
-            'status' => "Success",
+        // return response()->json([
+        //     'status' => "Success",
+        //     'message' => "Category Deleted Successfully",
+        // ],200);
+        $data = [
+            'status' => true,
             'message' => "Category Deleted Successfully",
-        ],200);
+            'error' => ''
+        ];
+        return redirect('/categoryPage')->with($data);
     }// end method
+
+
+    public function CategoryPage(Request $request){
+        $user_id = $request->header("id");
+
+        $categories = Category::where('user_id', $user_id)->latest()->get();
+        return Inertia::render('CategoryPage', ['categories' => $categories]);
+    } // end method
+
+    public function CategorySavePage(Request $request){
+        $category_id = $request->query('id');
+
+        $user_id = $request->header('id');
+
+        $category = Category::where('id', $category_id)->where('user_id', $user_id)->first();
+
+
+        return Inertia::render('CategorySavePage', ['category' => $category]);
+    }
 }
