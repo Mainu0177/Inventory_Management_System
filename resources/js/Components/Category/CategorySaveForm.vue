@@ -6,17 +6,17 @@
                     <div class="card-body">
                         <div class="float-end">
                             <Link href="/categoryPage" class="btn btn-success mx-3 btn-sm">
-                                Back
+                            Back
                             </Link>
                         </div>
-                        <form @summit.prevent="submit">
+                        <form @submit.prevent="submit">
                             <div class="card-body">
                                 <h4>Save Category</h4>
-                                <input hidden id="id" name="id" v-model="form.id" placeholder="Category ID" class="form-control" type="text"/>
-                                <br/>
-                                <input id="name" name="name" v-model="form.name" placeholder="Category Name" class="form-control" type="text"/>
-                                <br/>
-                                <button type="submit"  class="btn w-100 btn-success">Save Change</button>
+                                <input hidden id="id" name="id" v-model="form.id" placeholder="Category ID" class="form-control" type="text" />
+                                <br />
+                                <input id="name" name="name" v-model="form.name" placeholder="Category Name" class="form-control" type="text" />
+                                <br />
+                                <button type="submit" class="btn w-100 btn-success">Save Change</button>
                             </div>
                         </form>
                     </div>
@@ -40,7 +40,7 @@ let id = ref(parseInt(urlParams.get('id')));
 // console.log(id)
 // const id = urlParams.get('id');
 
-const form = useForm({ name: '', id:id });
+const form = useForm({ name: '', id: id });
 const page = usePage();
 
 let URL = "/create-category";
@@ -70,6 +70,4 @@ function submit() {
 
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -52,8 +52,8 @@ class ProductController extends Controller
             //     'message' => "Product Created Successfully",
             // ],200);
             $data = [
-                'status' => true,
                 'message' => "Product Created Successfully",
+                'status' => true,
                 'error' => ''
             ];
             return redirect('/ProductPage')->with($data);
@@ -64,9 +64,9 @@ class ProductController extends Controller
             //     'message' => $e->getMessage(),
             // ]);
             $data = [
-                'status' => false,
                 'message' => "Product not created, Please try again later",
-                'error' => ''
+                'status' => false,
+                'error' => $e->getMessage()
             ];
             return redirect('/ProductSavePage')->with($data);
         }
@@ -144,8 +144,8 @@ class ProductController extends Controller
             //     'data' => $product
             // ],200);
             $data = [
-                'status' => true,
                 'message' => "Product Updated Successfully",
+                'status' => true,
                 'error' => ''
             ];
             return redirect('/ProductPage')->with($data);
@@ -156,8 +156,8 @@ class ProductController extends Controller
             //     // 'message' => $e->getMessage(),
             // ], 500);
             $data = [
-                'status' => false,
                 'message' => "Product dose not Updated, please try again later",
+                'status' => false,
                 'error' => ''
             ];
             return redirect('/ProductSavePage')->with($data);
@@ -177,8 +177,8 @@ class ProductController extends Controller
             //     'message' => "Product deleted Successfully"
             // ], 200);
             $data = [
-                'status' => true,
                 'message' => "Product deleted Successfully",
+                'status' => true,
                 'error' => ''
             ];
             return redirect()->back()->with($data);
@@ -189,8 +189,8 @@ class ProductController extends Controller
             //     // 'message' => $e->getMessage(),
             // ], 500);
             $data = [
-                'status' => false,
                 'message' => "Product dose not deleted, please try again later",
+                'status' => false,
                 'error' => ''
             ];
             return redirect()->back()->with($data);

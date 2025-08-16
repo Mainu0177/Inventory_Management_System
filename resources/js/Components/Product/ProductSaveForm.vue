@@ -12,14 +12,14 @@
                         <form @submit.prevent="submit" enctype="multipart/form-data">
                             <div class="card-body">
                                 <h4>Save Product</h4>
-                                <input id="id" hidden name="id" v-model="form.id"  placeholder="Product ID" class="form-control" type="text"/>
-                                <br/>
-                                <input id="name" name="name" v-model="form.name"  placeholder="Product Name" class="form-control" type="text"/>
-                                <br/>
-                                <input id="price" name="price" v-model="form.price"  placeholder="Product Price" class="form-control" type="text"/>
-                                <br/>
-                                <input id="unit" name="unit" v-model="form.unit"  placeholder="Product Unit" class="form-control" type="text"/>
-                                <br/>
+                                <input id="id" hidden name="id" v-model="form.id" placeholder="Product ID" class="form-control" type="text" />
+                                <br />
+                                <input id="name" name="name" v-model="form.name" placeholder="Product Name" class="form-control" type="text" />
+                                <br />
+                                <input id="price" name="price" v-model="form.price" placeholder="Product Price" class="form-control" type="text" />
+                                <br />
+                                <input id="unit" name="unit" v-model="form.unit" placeholder="Product Unit" class="form-control" type="text" />
+                                <br />
                                 <!-- Category Dropdown -->
                                 <div>
                                     <label for="category">Select Category:</label>
@@ -30,13 +30,13 @@
 
                                     </select>
                                 </div>
-                                <br/>
+                                <br />
                                 <div>
                                     <label for="image">Product Image:</label> <br>
-                                    <ImageUpload :productImage="form.image" @image="(e)=>form.image = e" />
+                                    <ImageUpload :productImage="form.image" @image="(e) => form.image = e" />
                                 </div>
-                                <br/>
-                                <button type="submit"  class="btn w-100 btn-success">Save Change</button>
+                                <br />
+                                <button type="submit" class="btn w-100 btn-success">Save Change</button>
                             </div>
                         </form>
                     </div>
@@ -95,11 +95,12 @@ function submit() {
     } else {
         form.post(URL, {
             onSuccess: () => {
-                if(page.props.flash.status === true) {
+                if (page.props.flash.status === true) {
                     toaster.success(page.props.flash.message);
                     router.get('/ProductPage');
                 } else {
-                    toaster.error(page.props.flash.message);
+                    toaster.error(page.props.flash.error || page.props.flash.message);
+                    console.log(page.props.flash.error)
                 }
             }
         });
@@ -113,6 +114,4 @@ function submit() {
 
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

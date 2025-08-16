@@ -10,9 +10,9 @@
                         </div>
                         <hr />
                         <div class="float-end">
-                            <a href="/CategorySavePage?id=0" class="btn btn-success mx-3 btn-sm">
-                                Add Category
-                            </a>
+                            <Link href="/CategorySavePage?id=0" class="btn btn-success mx-3 btn-sm">
+                            Add Category
+                            </Link>
                         </div>
 
                         <!-- Modal -->

@@ -66,7 +66,11 @@ Route::middleware(SessionAuthenticate::class)->group(function () {
         Route::get('/customer-list', 'CustomerList')->name('customer.list');
         Route::post('/customer-detail-by-id', 'CustomerDetail')->name('customer.detail.by.id');
         Route::post('/customer-update', 'CustomerUpdate')->name('customer.update');
-        Route::delete('/customer-delete', 'CustomerDelete')->name('customer.delete');
+        Route::get('/customer-delete/{id}', 'CustomerDelete')->name('customer.delete');
+
+        Route::get('/CustomerPage', 'CustomerPage')->name('CustomerPage');
+        Route::get('/CustomerSavePage', 'CustomerSavePage')->name('CustomerSavePage');
+
     });
 
     // Invoice all routes
@@ -75,6 +79,9 @@ Route::middleware(SessionAuthenticate::class)->group(function () {
         Route::get('/invoice-list', 'InvoiceList')->name('invoice.list');
         Route::post('/invoice-details', 'InvoiceDetails')->name('invoice.details');
         Route::get('/invoice-delete/{id}', 'InvoiceDelete')->name('invoice.delete');
+
+        Route::get('/InvoicePage', 'InvoicePage')->name('InvoicePage');
+        Route::get('/InvoiceSavePage', 'InvoiceSavePage')->name('InvoiceSavePage');
     });
 
     // Dashboard Summary
