@@ -5,6 +5,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\SaleController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\SessionAuthenticate;
 use App\Http\Middleware\TokenVerificationMiddleware;
@@ -80,7 +81,7 @@ Route::middleware(SessionAuthenticate::class)->group(function () {
         Route::post('/invoice-details', 'InvoiceDetails')->name('invoice.details');
         Route::get('/invoice-delete/{id}', 'InvoiceDelete')->name('invoice.delete');
 
-        Route::get('/InvoicePage', 'InvoicePage')->name('InvoicePage');
+        Route::get('/InvoiceListPage', 'InvoiceListPage')->name('InvoicePage');
         Route::get('/InvoiceSavePage', 'InvoiceSavePage')->name('InvoiceSavePage');
     });
 
@@ -89,6 +90,9 @@ Route::middleware(SessionAuthenticate::class)->group(function () {
 
     // Profile update
     Route::post('user-profile-update', [UserController::class, 'UserUpdate'])->name('dashboard.summary');
+
+    //sale all routes
+    Route::get('/create-sale', [SaleController::class, 'SalePage'])->name('sale.page');
 
 });
 
