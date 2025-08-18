@@ -18,7 +18,7 @@
                                 <br />
                                 <input id="price" name="price" v-model="form.price" placeholder="Product Price" class="form-control" type="text" />
                                 <br />
-                                <input id="unit" name="unit" v-model="form.unit" placeholder="Product Unit" class="form-control" type="text" />
+                                <input id="unit" name="unit" v-model="form.unit" placeholder="Product Unit" class="form-control" type="number" />
                                 <br />
                                 <!-- Category Dropdown -->
                                 <div>

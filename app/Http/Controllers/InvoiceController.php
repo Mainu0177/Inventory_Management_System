@@ -15,6 +15,7 @@ class InvoiceController extends Controller
 {
     public function CreateInvoice(Request $request)
     {
+        // dd($request->all());
         DB::beginTransaction();
         try {
             $user_id = $request->header('id');
@@ -32,16 +33,28 @@ class InvoiceController extends Controller
             foreach ($products as $product) {
                 $existingProduct = Product::where('id', $product['id'])->select('unit')->first();
                 if (!$existingProduct) {
-                    return response()->json([
-                        'status' => 'Failed',
-                        'message' => "Product with ID {$product['id']} not found",
-                    ], 404);
+                    // return response()->json([
+                    //     'status' => 'Failed',
+                    //     'message' => "Product with ID {$product['id']} not found",
+                    // ], 404);
+                    $data = [
+                    'message' => 'Product with ID '.$product['id']. 'not found',
+                    'status' => false,
+                    'error' => '',
+                ];
+                    return redirect()->back()->with($data);
                 }
                 if ($existingProduct->unit < $product['unit']) {
-                    return response()->json([
-                        'status' => 'Failed',
-                        'message' => "Only {$existingProduct->unit} Units available for product with ID {$product['id']}"
-                    ]);
+                    // return response()->json([
+                    //     'status' => 'Failed',
+                    //     'message' => "Only {$existingProduct->unit} Units available for product with ID {$product['id']}"
+                    // ]);
+                    $data = [
+                    'message' => 'Only '.$existingProduct->unit.' Units available for Product with ID '.$product['id'],
+                    'status' => false,
+                    'error' => '',
+                ];
+                    return redirect()->back()->with($data);
                 }
 
                 InvoiceProduct::create([
@@ -58,17 +71,24 @@ class InvoiceController extends Controller
             }
 
             DB::commit();
-            return response()->json([
-                'status' => 'Success',
-                'message' => 'Invoice Created Successfully',
-            ], 200);
+            // return response()->json([
+            //     'status' => 'Success',
+            //     'message' => 'Invoice Created Successfully',
+            // ], 200);
+            $data = [
+                'message' => 'Invoice created Successfully',
+                'status' => true,
+                'error' => '',
+            ];
+            return redirect('/InvoiceListPage')->with($data);
         } catch (Exception $e) {
             DB::rollBack();
-            return response()->json([
-                'status' => 'Failed',
-                // 'message' => "Invoice dose not created, Please try again later."
-                'message' => $e->getMessage()
-            ]);
+            $data = [
+                'message' => 'Something went wrong, please try again later',
+                'status' => false,
+                'error' => '',
+            ];
+            return redirect('/InvoiceListPage')->with($data);
         }
     }// end method
     public function InvoiceList(Request $request)
