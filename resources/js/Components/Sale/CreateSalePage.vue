@@ -12,14 +12,14 @@
                                     <span class="text-bold text-dark">BILLED TO</span>
                                     <p class="text-xs mx-0 my-1">Name: <span>{{ selectedCustomer?.name || '' }}</span></p>
                                     <p class="text-xs mx-0 my-1">Email: <span>{{ selectedCustomer?.email || '' }}</span></p>
-                                    <p class="text-xs mx-0 my-1">User ID: <span>{{ selectedCustomer?.id ||'' }}</span></p>
+                                    <p class="text-xs mx-0 my-1">User ID: <span>{{ selectedCustomer?.id || '' }}</span></p>
                                 </div>
                                 <div class="col-4">
                                     <p class="text-bold mx-0 my-1 text-dark">Invoice</p>
                                     <p class="text-xs mx-0 my-1">Date: {{ new Date().toISOString().slice(0, 10) }}</p>
                                 </div>
                             </div>
-                            <hr class="mx-0 my-2 p-0 bg-secondary"/>
+                            <hr class="mx-0 my-2 p-0 bg-secondary" />
                             <div class="row">
                                 <div class="col-12">
                                     <table class="table w-100">
@@ -32,7 +32,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr v-if="selectedProduct.length > 0" v-for="(product,index) in selectedProduct" :key="index" class="text-center">
+                                            <tr v-if="selectedProduct.length > 0" v-for="(product, index) in selectedProduct" :key="index" class="text-center">
                                                 <td> {{ product.name }} </td>
                                                 <td> {{ product.unit }} </td>
                                                 <td> {{ product.price }} </td>
@@ -46,34 +46,34 @@
                                     </table>
                                 </div>
                             </div>
-                            <hr class="mx-0 my-2 p-0 bg-secondary"/>
+                            <hr class="mx-0 my-2 p-0 bg-secondary" />
                             <div class="row">
                                 <div class="col-12">
                                     <p class="text-bold text-xs my-1 text-dark">Total: <i class="bi bi-currency-dollar"></i>{{ calculateTotal() }}</p>
-                                    <p class="text-bold text-xs my-1 text-dark">VAT ({{ vatRate }}%): <i class="bi bi-currency-dollar"></i> {{vatAmount}}</p>
+                                    <p class="text-bold text-xs my-1 text-dark">VAT ({{ vatRate }}%): <i class="bi bi-currency-dollar"></i> {{ vatAmount }}</p>
                                     <p><button class="btn btn-info btn-sm my-1 bg-gradient-primary w-40" @click="applyVat">Apply VAT</button></p>
                                     <p><button class="btn btn-secondary btn-sm my-1 bg-gradient-primary w-40" @click="removeVat">Remove VAT</button></p>
 
                                     <p><span class="text-xxs">Discount Mode:</span></p>
-                                    <select v-model="usePercentageDiscount" >
+                                    <select v-model="usePercentageDiscount">
                                         <option :value="false">Flat Discount</option>
                                         <option :value="true">Percentage Discount</option>
                                     </select>
-                                    <p class="text-bold text-xs my-1 text-dark">Discount: <i class="bi bi-currency-dollar"></i> {{discountAmount}} </p>
+                                    <p class="text-bold text-xs my-1 text-dark">Discount: <i class="bi bi-currency-dollar"></i> {{ discountAmount }} </p>
                                     <div v-if="!usePercentageDiscount">
                                         <span class="text-xxs">Flat Discount:</span>
-                                        <input type="number" v-model="discountPercent" class="form-control w-40" min="0" />
+                                        <input type="number" v-model="flatDiscount" class="form-control w-40" min="0" />
                                         <p><button @click="applyDiscount" class="btn btn-warning btn-sm my-1 bg-gradient-primary w-40">Apply Flat Discount</button></p>
                                     </div>
                                     <div v-else>
                                         <span class="text-xxs">Discount (%):</span>
-                                        <input type="number" v-model="flatDiscount" class="form-control w-40" min="0" max="100" step="0.25" />
+                                        <input type="number" v-model="discountPercent" class="form-control w-40" min="0" max="100" step="0.25" />
                                         <p><button @click="applyDiscount" class="btn btn-warning btn-sm my-1 bg-gradient-primary w-40">Apply Percentage Discount</button></p>
                                     </div>
                                     <p><button class="btn btn-secondary btn-sm my-1 bg-gradient-primary w-40" @click="removeDiscount">Remove Discount</button></p>
 
-                                    <hr class="mx-0 my-2 p-0 bg-secondary"/>
-                                    <p class="text-bold text-xs my-1 text-dark">Payable: <i class="bi bi-currency-dollar"></i> {{payable}}</p>
+                                    <hr class="mx-0 my-2 p-0 bg-secondary" />
+                                    <p class="text-bold text-xs my-1 text-dark">Payable: <i class="bi bi-currency-dollar"></i> {{ payable }}</p>
                                     <p><button class="btn btn-success btn-sm my-3 bg-gradient-primary w-40" @click="createInvoice">Confirm</button></p>
                                 </div>
                             </div>
@@ -87,26 +87,14 @@
                 <div class="card">
                     <div class="card-body">
                         <h4>Select Product</h4>
-                        <input
-                            v-model="searchProductValue"
-                            placeholder="Search..."
-                            class="form-control mb-2 w-auto form-control-sm"
-                            type="text"
-                        />
-                        <EasyDataTable
-                            buttons-paginations
-                            alternating
-                            :items="ProductItem"
-                            :headers="ProductHeader"
-                            :rows-per-page="10"
-                            :search-value="searchProductValue"
-                            :search-field="searchProductField"
-                        >
-                            <template #item-image="{image}">
-                                <img :src="image ? image: '/placeholder.png'" alt="Product Image" height="40px" width="40px" />
+                        <input v-model="searchProductValue" placeholder="Search..." class="form-control mb-2 w-auto form-control-sm" type="text" />
+                        <EasyDataTable buttons-paginations alternating :items="ProductItem" :headers="ProductHeader" :rows-per-page="10" :search-value="searchProductValue"
+                            :search-field="searchProductField">
+                            <template #item-image="{ image }">
+                                <img :src="image ? image : '/placeholder.png'" alt="Product Image" height="40px" width="40px" />
                             </template>
 
-                            <template #item-action="{id, image, name, price, unit}">
+                            <template #item-action="{ id, image, name, price, unit }">
                                 <button @click="addProductToSale(id, image, name, price, unit)" :class="['btn btn-sm', unit > 0 ? 'btn-success' : 'btn-warning']">
                                     {{ unit > 0 ? 'Add' : 'Stock Out' }}
                                 </button>
@@ -121,30 +109,18 @@
                 <div class="card">
                     <div class="card-body">
                         <h4>Select Customer</h4>
-                        <input
-                            placeholder="Search..."
-                            class="form-control mb-2 w-auto form-control-sm"
-                            type="text"
-                            v-model="searchCustomerValue"
-                        />
-                        <EasyDataTable
-                            buttons-pagination
-                            alternating
-                            :headers="CustomerHeader"
-                            :items="CustomerItem"
-                            :rows-per-page="10"
-                            :search-field="searchCustomerField"
-                            :search-value="searchCustomerValue"
-                            show-index
-                        >
-                            <template #item-number="{id, name, email}">
-                                <button @click="addCustomerToSale({id, name, email})" class="btn btn-success btn-sm">Add</button>
+                        <input placeholder="Search..." class="form-control mb-2 w-auto form-control-sm" type="text" v-model="searchCustomerValue" />
+                        <EasyDataTable buttons-pagination alternating :headers="CustomerHeader" :items="CustomerItem" :rows-per-page="10" :search-field="searchCustomerField"
+                            :search-value="searchCustomerValue" show-index>
+                            <template #item-number="{ id, name, email }">
+                                <button @click="addCustomerToSale({ id, name, email })" class="btn btn-success btn-sm">Add</button>
                             </template>
                         </EasyDataTable>
                     </div>
                 </div>
             </div>
             <!-- {{ selectedCustomer }} -->
+            {{ selectedProduct }}
         </div>
     </div>
 </template>
@@ -217,7 +193,7 @@ const addProductToSale = (id, image, name, price, productUnit) => {
             };
             selectedProduct.value.push(product);
             calculateTotal();
-        }else {
+        } else {
             toaster.warning(`${name} is out of stock!`);
         }
     }
@@ -263,7 +239,7 @@ const discountAmount = ref(0);
 const usePercentageDiscount = ref(0);
 
 const calculateTotal = () => {
-    return selectedProduct.value.reduce((sum, product) => sum + (product.productPrice * product.Unit), 0);
+    return selectedProduct.value.reduce((sum, product) => sum + (product.productPrice * product.unit), 0);
 }
 
 const applyVat = () => {
@@ -302,7 +278,7 @@ watch(
     () => {
         calculatePayable();
     },
-    {deep: true}
+    { deep: true }
 )
 
 const payable = ref(0);
@@ -317,7 +293,7 @@ const form = useForm({
 })
 
 const createInvoice = () => {
-    if(!selectedCustomer.value){
+    if (!selectedCustomer.value) {
         toaster.warning("Please select a customer");
         return;
     }
@@ -353,6 +329,4 @@ const createInvoice = () => {
 
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

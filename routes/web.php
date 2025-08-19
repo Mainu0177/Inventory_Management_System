@@ -25,7 +25,7 @@ Route::get('/Home', [HomeController::class, 'HomePage'])->name('Home');
 // All user Routes
 Route::post('/user-registration', [UserController::class, 'UserRegistration'])->name('UserRegistration');
 Route::post('/user-login', [UserController::class, 'UserLogin'])->name('user.login');
-Route::get('/user-logout', [UserController::class, 'UserLogout'])->name('user.logout');
+// Route::get('/user-logout', [UserController::class, 'UserLogout'])->name('user.logout');
 Route::get('/dashboardPage', [DashboardController::class, 'DashboardPage'])->middleware([SessionAuthenticate::class])->name('dashboard.page');
 
 //send otp
@@ -86,13 +86,18 @@ Route::middleware(SessionAuthenticate::class)->group(function () {
     });
 
     // Dashboard Summary
-    Route::get('dashboard-summary', [DashboardController::class, 'DashboardController'])->name('dashboard.summary');
+    Route::get('/dashboard-summary', [DashboardController::class, 'DashboardController'])->name('dashboard.summary');
 
     // Profile update
-    Route::post('user-profile-update', [UserController::class, 'UserUpdate'])->name('dashboard.summary');
+    Route::post('/user-profile-update', [UserController::class, 'UserUpdate'])->name('dashboard.summary');
+    Route::get('/userProfilePage', [UserController::class, 'UserProfilePage'])->name('ProfilePage');
+    Route::get('/user-logout', [UserController::class, 'UserLogout'])->name('user.logout');
+
 
     //sale all routes
     Route::get('/create-sale', [SaleController::class, 'SalePage'])->name('sale.page');
+
+
 
 });
 
