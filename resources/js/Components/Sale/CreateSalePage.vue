@@ -120,7 +120,7 @@
                 </div>
             </div>
             <!-- {{ selectedCustomer }} -->
-            {{ selectedProduct }}
+            <!-- {{ selectedProduct }} -->
         </div>
     </div>
 </template>
@@ -320,6 +320,7 @@ const createInvoice = () => {
                 setTimeout(() => {
                     router.get('/InvoiceListPage');
                 }, 500)
+            } else {
                 toaster.error(page.props.flash.message)
             }
         }

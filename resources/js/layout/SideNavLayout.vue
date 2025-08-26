@@ -9,7 +9,7 @@
         </nav>
         <div id="sideNav" class="side-nav-open">
             <div class="side-nav-top text-center">
-                <img alt="" class="side-nav-logo" src="./Assets/img/logo.svg" />
+                <img alt="" class="side-nav-logo" src="../Assets/img/logo.svg" />
             </div>
 
             <Link href="/dashboardPage" class="side-bar-item">
