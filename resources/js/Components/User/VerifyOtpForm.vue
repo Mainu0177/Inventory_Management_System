@@ -10,7 +10,7 @@
                             <label>4 Digit Code Here</label>
                             <input v-model="form.otp" id="otp" placeholder="Code" class="form-control" type="text"/>
                             <br/>
-                            <button type="submit" class="btn w-100 btn-success">Next</button>
+                            <button type="submit" class="btn w-100 btn-secondary">Next</button>
                         </div>
                     </form>
                 </div>

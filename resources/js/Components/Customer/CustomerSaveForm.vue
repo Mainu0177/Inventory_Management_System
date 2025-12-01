@@ -5,13 +5,13 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="float-end">
-                            <Link href="/CustomerPage" class="btn btn-success mx-3 btn-sm">
+                            <Link href="/CustomerPage" class="btn btn-secondary mx-3 btn-sm">
                                 Back
                             </Link>
                         </div>
                         <form @submit.prevent="submit">
                             <div class="card-body">
-                                <h4>Save Customer</h4>
+                                <h4>Save Client</h4>
                                 <input id="id" hidden name="id" v-model="form.id"  placeholder="Customer ID" class="form-control" type="text"/>
                                 <br/>
                                 <input id="name" name="name" v-model="form.name"  placeholder="Customer Name" class="form-control" type="text"/>
@@ -20,7 +20,7 @@
                                 <br/>
                                 <input id="mobile" name="phone" v-model="form.mobile"  placeholder="Customer Phone" class="form-control" type="text"/>
                                 <br/>
-                                <button type="submit"  class="btn w-100 btn-success">Save Change</button>
+                                <button type="submit"  class="btn w-100 btn-secondary">Save Change</button>
                             </div>
                         </form>
                     </div>

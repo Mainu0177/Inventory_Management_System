@@ -26,7 +26,7 @@
                                 </div>
                                 <div class="row m-0 p-0">
                                     <div class="col-md-4 p-2">
-                                        <button type="submit"  class="btn mt-3 w-100  btn-success">Update</button>
+                                        <button type="submit"  class="btn mt-3 w-100  btn-secondary">Update</button>
                                     </div>
                                 </div>
                             </div>

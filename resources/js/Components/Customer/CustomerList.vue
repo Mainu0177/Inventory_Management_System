@@ -6,12 +6,12 @@
                 <div class="card">
                     <div class="card-body">
                         <div>
-                            <h3>Customer</h3>
+                            <h3>Client</h3>
                         </div>
                         <hr/>
                         <div class="float-end">
-                            <a href="/CustomerSavePage?id=0" class="btn btn-success mx-3 btn-sm">
-                                Add Customer
+                            <a href="/CustomerSavePage?id=0" class="btn btn-secondary mx-3 btn-sm">
+                                Add Client
                             </a>
                         </div>
 
@@ -20,7 +20,7 @@
                         <div>
                             <input placeholder="Search..." class="form-control mb-2 w-auto form-control-sm" type="text" v-model="searchValue">
                             <EasyDataTable buttons-pagination alternating :headers="Header" :items="Item" :rows-per-page="10" :search-field="searchField"  :search-value="searchValue">
-                                <template #item-number="{ id,name}">
+                                <template #item-number="{ id}">
                                     <Link class="btn btn-success mx-3 btn-sm" :href="`/CustomerSavePage?id=${id}`">Edit</Link>
                                     <button class="btn btn-danger btn-sm" @click="DeleteClick(id)">Delete</button>
                                 </template>

@@ -5,7 +5,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="float-end">
-                            <a href="/ProductPage" class="btn btn-success mx-3 btn-sm">
+                            <a href="/ProductPage" class="btn btn-secondary mx-3 btn-sm">
                                 Back
                             </a>
                         </div>
@@ -36,7 +36,7 @@
                                     <ImageUpload :productImage="form.image" @image="(e) => form.image = e" />
                                 </div>
                                 <br />
-                                <button type="submit" class="btn w-100 btn-success">Save Change</button>
+                                <button type="submit" class="btn w-100 btn-secondary">Save Change</button>
                             </div>
                         </form>
                     </div>

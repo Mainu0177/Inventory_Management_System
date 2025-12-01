@@ -13,7 +13,7 @@
                             <label>Confirm Password</label>
                             <input id="cpassword" v-model="form.cpassword" placeholder="Confirm Password" class="form-control" type="password"/>
                             <br/>
-                            <button type="submit" class="btn w-100 btn-success">Next</button>
+                            <button type="submit" class="btn w-100 btn-secondary">Next</button>
                         </div>
                     </form>
                 </div>

@@ -9,7 +9,7 @@
                         </div>
                         <hr/>
                         <div class="float-end">
-                            <a href="/ProductSavePage?id=0" class="btn btn-success mx-3 btn-sm">
+                            <a href="/ProductSavePage?id=0" class="btn btn-secondary mx-3 btn-sm">
                                 Add Product
                             </a>
                         </div>

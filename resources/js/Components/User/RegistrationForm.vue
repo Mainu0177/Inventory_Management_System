@@ -35,7 +35,7 @@
                                 </div>
                                 <div class="row m-0 p-0">
                                     <div class="col-md-4 p-2">
-                                        <button type="submit" href="/registration"  class="btn mt-3 w-100  btn-success">Complete</button>
+                                        <button type="submit" href="/registration"  class="btn mt-3 w-100  btn-secondary">Complete</button>
                                     </div>
                                 </div>
                             </div>
