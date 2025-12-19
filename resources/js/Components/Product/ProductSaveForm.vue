@@ -20,17 +20,6 @@
                                 <br />
                                 <input id="unit" name="unit" v-model="form.unit" placeholder="Product Unit" class="form-control" type="number" />
                                 <br />
-                                <!-- Category Dropdown -->
-                                <div>
-                                    <label for="category">Select Category:</label>
-                                    <select v-model="form.category_id" class="form-control" id="category">
-                                        <option value="" disabled>Select a category</option>
-
-                                        <option v-for="category in categories" :key="category_id" :value="category.id">{{ category.name }}</option>
-
-                                    </select>
-                                </div>
-                                <br />
                                 <div>
                                     <label for="image">Product Image:</label> <br>
                                     <ImageUpload :productImage="form.image" @image="(e) => form.image = e" />
@@ -47,9 +36,9 @@
 </template>
 
 <script setup>
-import { Link, usePage, useForm, router } from '@inertiajs/vue3';
+import { usePage, useForm, router } from '@inertiajs/vue3';
 import { createToaster } from '@meforma/vue-toaster';
-import { handleError, ref } from 'vue';
+import { ref } from 'vue';
 import ImageUpload from './ImageUpload.vue';
 
 const toaster = createToaster({
@@ -66,11 +55,9 @@ const form = useForm({
     name: '',
     price: '',
     unit: '',
-    category_id: '',
     image: null,
 });
 
-let categories = page.props.categories;
 let product = page.props.product;
 
 let URL = "/create-product";
@@ -79,7 +66,6 @@ if (id.value !== 0 && product !== null) {
     form.name = product.name;
     form.price = product.price;
     form.unit = product.unit;
-    form.category_id = product.category_id;
     form.image = product.image;
 }
 
@@ -90,8 +76,6 @@ function submit() {
         toaster.warning('Product price is required');
     } else if (form.unit.length === 0) {
         toaster.warning('Product unit is required');
-    } else if (form.category_id.length === 0) {
-        toaster.warning('Product category is required');
     } else {
         form.post(URL, {
             onSuccess: () => {

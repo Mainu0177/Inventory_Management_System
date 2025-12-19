@@ -17,11 +17,13 @@ class CustomerController extends Controller
                 'name' => 'required',
                 'email' => 'required',
                 'mobile' => 'required',
+                'address' => 'required',
             ]);
             $createCustomer = Customer::create([
                 'name' => $request->name,
                 'email' => $request->email,
                 'mobile' => $request->mobile,
+                'address' => $request->address,
                 'user_id' => $user_id,
             ]);
 
@@ -97,17 +99,14 @@ class CustomerController extends Controller
                 'name' => 'required',
                 'email' => 'required',
                 'mobile' => 'required',
+                'address' => 'required',
             ]);
             $updateCustomer = Customer::where('id', $request->input('id'))->where('user_id', $user_id)->update([
                 'name' => $request->input('name'),
                 'email' => $request->input('email'),
                 'mobile' => $request->input('mobile'),
+                'address' => $request->input('address'),
             ]);
-            // return response()->json([
-            //     'status' => 'Success',
-            //     'message' => 'Customer updated successfully',
-            //     'data' => $updateCustomer,
-            // ], 200);
             $data = [
                 'status' => true,
                 'message' => "Customer updated successfully",
@@ -133,12 +132,6 @@ class CustomerController extends Controller
         try {
             $user_id = $request->header('id');
             Customer::where('id', $id)->where('user_id', $user_id)->delete();
-            // $deleteCustomer = Customer::where('id', $request->input('id'))->where('user_id', $user_id)->delete();
-            // return response()->json([
-            //     'status' => 'Success',
-            //     'message' => 'Customer deleted successfully',
-            //     'data' => $deleteCustomer,
-            // ], 200);
 
             $data = [
                 'status' => true,
@@ -147,11 +140,6 @@ class CustomerController extends Controller
             ];
             return redirect()->back()->with($data);
         } catch (\Exception $e) {
-            // return response()->json([
-            //     'status' => 'Failed',
-            //     'message' => 'Customer does not deleted, Please try again later',
-            //     // 'message' => $e->getMessage();
-            // ], 500);
             $data = [
                 'status' => false,
                 'message' => "Customer does not deleted, Please try again letter",

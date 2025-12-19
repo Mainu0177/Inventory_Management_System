@@ -24,6 +24,7 @@ class InvoiceController extends Controller
                 'discount' => $request->input('discount'),
                 'vat' => $request->input('vat'),
                 'payable' => $request->input('payable'),
+                'poNumber' => $request->input('poNumber'),
                 'customer_id' => $request->input('customer_id'),
                 'user_id' => $user_id,
             ];
@@ -33,10 +34,6 @@ class InvoiceController extends Controller
             foreach ($products as $product) {
                 $existingProduct = Product::where('id', $product['id'])->select('unit')->first();
                 if (!$existingProduct) {
-                    // return response()->json([
-                    //     'status' => 'Failed',
-                    //     'message' => "Product with ID {$product['id']} not found",
-                    // ], 404);
                     $data = [
                     'message' => 'Product with ID '.$product['id']. 'not found',
                     'status' => false,
@@ -45,10 +42,6 @@ class InvoiceController extends Controller
                     return redirect()->back()->with($data);
                 }
                 if ($existingProduct->unit < $product['unit']) {
-                    // return response()->json([
-                    //     'status' => 'Failed',
-                    //     'message' => "Only {$existingProduct->unit} Units available for product with ID {$product['id']}"
-                    // ]);
                     $data = [
                     'message' => 'Only '.$existingProduct->unit.' Units available for Product with ID '.$product['id'],
                     'status' => false,
@@ -63,6 +56,7 @@ class InvoiceController extends Controller
                     'user_id' => $user_id,
                     'qty' => $product['unit'],
                     'sale_price' => $product['price'],
+                    'poNumber' => $request->input('poNumber'),
                 ]);
 
                 Product::where('id', $product['id'])->update([

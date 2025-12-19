@@ -73,6 +73,12 @@
                                     <p><button class="btn btn-secondary btn-sm my-1 bg-gradient-primary w-40" @click="removeDiscount">Remove Discount</button></p>
 
                                     <hr class="mx-0 my-2 p-0 bg-secondary" />
+                                    <div>
+                                        <label for="">PO NO: </label>
+                                        <input v-model="poNumber" type="text">
+                                    </div>
+
+                                    <hr class="mx-0 my-2 p-0 bg-secondary" />
                                     <p class="text-bold text-xs my-1 text-dark">Payable: <i class="bi bi-currency-dollar"></i> {{ payable }}</p>
                                     <p><button class="btn btn-success btn-sm my-3 bg-gradient-primary w-40" @click="createInvoice">Confirm</button></p>
                                 </div>
@@ -237,6 +243,7 @@ const discountPercent = ref(0);
 const total = ref(0);
 const discountAmount = ref(0);
 const usePercentageDiscount = ref(0);
+const poNumber = ref('');
 
 const calculateTotal = () => {
     return selectedProduct.value.reduce((sum, product) => sum + (product.productPrice * product.unit), 0);
@@ -290,6 +297,7 @@ const form = useForm({
     discount: '',
     payable: calculateTotal(),
     total: '',
+    poNumber: '',
 })
 
 const createInvoice = () => {
@@ -308,6 +316,7 @@ const createInvoice = () => {
     form.vat = vatAmount.value;
     form.discount = discountAmount.value;
     form.payable = payable.value;
+    form.poNumber = poNumber.value;
     const calculated = calculateTotal();
 
     form.total = calculated;

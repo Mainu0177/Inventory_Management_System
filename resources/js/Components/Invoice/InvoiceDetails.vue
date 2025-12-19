@@ -14,13 +14,14 @@
                 <div class="col-8">
                 <strong>BILLED TO</strong>
                 <p class="mb-1">Name: <span>{{ customer.customer.name }}</span></p>
-                <p class="mb-1">Name: <span>{{ customer.customer.email }}</span></p>
-                <p class="mb-1">Customer ID: <span>{{ customer.customer.id }}</span></p>
+                <p class="mb-1">email: <span>{{ customer.customer.email }}</span></p>
+                <p class="mb-1">Client ID: <span>{{ customer.customer.id }}</span></p>
                 <p class="mb-1">Phone: <span>{{ customer.customer.mobile }}</span></p>
+                <p class="mb-1">Address: <span>{{ customer.customer.address }}</span></p>
                 </div>
                 <!-- Invoice Info Section -->
                 <div class="col-4 text-right">
-                <img class="w-40" src="../../Assets/img/logo.svg" alt="Company Logo">
+                <img class="w-40" src="../../Assets/img/factoryLogo.jpg" alt="Company Logo">
                 <p class="mb-1"><strong>Invoice</strong></p>
                 <p class="mb-1">Date: {{ new Date().toLocaleDateString() }}</p>
                 </div>
@@ -59,6 +60,7 @@
                 <div class="col-12">
                 <p><strong>Total:</strong> {{ customer.total }} </p>
                 <p><strong>Payable:</strong> {{ customer.payable }} </p>
+                <p><strong>PO:</strong> {{ customer.poNumber }} </p>
                 <!-- <p><strong>VAT (5%):</strong> {{ customer.vat }}</p>
                             <p><strong>Discount:</strong> {{ customer.discount }}</p> -->
                 </div>

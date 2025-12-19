@@ -8,14 +8,9 @@ class Product extends Model
 {
     protected $fillable = [
         'user_id',
-        'category_id',
         'name',
         'price',
         'unit',
         'image'
     ];
-
-    public function Category(){
-        return $this->belongsTo(Category::class);
-    }
 }

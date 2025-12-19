@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name', 50);
             $table->string('email', 50)->unique();
             $table->string('mobile', 20);
+            $table->string('address', 255);
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnUpdate()->restrictOnDelete();
 

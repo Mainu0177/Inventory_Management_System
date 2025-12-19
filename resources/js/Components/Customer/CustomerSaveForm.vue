@@ -12,13 +12,16 @@
                         <form @submit.prevent="submit">
                             <div class="card-body">
                                 <h4>Save Client</h4>
-                                <input id="id" hidden name="id" v-model="form.id"  placeholder="Customer ID" class="form-control" type="text"/>
+                                <input id="id" hidden name="id" v-model="form.id"  placeholder="Client ID" class="form-control" type="text"/>
                                 <br/>
-                                <input id="name" name="name" v-model="form.name"  placeholder="Customer Name" class="form-control" type="text"/>
+                                <input id="name" name="name" v-model="form.name"  placeholder="Client Name" class="form-control" type="text"/>
                                 <br/>
-                                <input id="email" name="email" v-model="form.email"  placeholder="Customer Email" class="form-control" type="email"/>
+                                <input id="email" name="email" v-model="form.email"  placeholder="Client Email" class="form-control" type="email"/>
                                 <br/>
-                                <input id="mobile" name="phone" v-model="form.mobile"  placeholder="Customer Phone" class="form-control" type="text"/>
+                                <input id="mobile" name="phone" v-model="form.mobile"  placeholder="Client Phone" class="form-control" type="text"/>
+                                <br/>
+                                <br/>
+                                <textarea id="address" name="phone" v-model="form.address"  placeholder="Client address" class="form-control" type="text"/>
                                 <br/>
                                 <button type="submit"  class="btn w-100 btn-secondary">Save Change</button>
                             </div>
@@ -48,6 +51,7 @@ const form = useForm({
     name: '',
     email: '',
     mobile: '',
+    address: '',
 })
 
 const page = usePage();
@@ -60,6 +64,7 @@ if (id.value !== 0 && list !== null) {
     form.name = list.name;
     form.email = list.email;
     form.mobile = list.mobile;
+    form.address = list.address;
 }
 
 function submit() {

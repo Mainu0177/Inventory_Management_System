@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Customer;
 use App\Models\Invoice;
 use App\Models\Product;
-use App\Models\Category;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -15,7 +14,6 @@ class DashboardController extends Controller
         $user_id = $request->header('id');
 
         $product = Product::where('user_id', $user_id)->count();
-        $category = Category::where('user_id', $user_id)->count();
         $customer = Customer::where('user_id', $user_id)->count();
         $invoice = Invoice::where('user_id', $user_id)->count();
         $total = Invoice::where('user_id', $user_id)->sum('total');
@@ -24,7 +22,6 @@ class DashboardController extends Controller
 
         $data = [
             'Product' => $product,
-            'Category' => $category,
             'Customer' => $customer,
             'Invoice' => $invoice,
             'Total' => $total,
@@ -36,14 +33,7 @@ class DashboardController extends Controller
         public function DashboardPage(Request $request){
         $user_id = $request->header('id');
 
-        // return response()->json([
-        //     'status' => 'success',
-        //     'message' => 'User Login Successfully',
-        //     'user' => $user
-        // ],200);
-
         $product = Product::where('user_id', $user_id)->count();
-        $category = Category::where('user_id', $user_id)->count();
         $customer = Customer::where('user_id', $user_id)->count();
         $invoice = Invoice::where('user_id', $user_id)->count();
         $total = Invoice::where('user_id', $user_id)->sum('total');
@@ -52,7 +42,6 @@ class DashboardController extends Controller
 
         $data = [
             'Product' => $product,
-            'Category' => $category,
             'Customer' => $customer,
             'Invoice' => $invoice,
             'Total' => $total,

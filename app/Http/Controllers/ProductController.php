@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Exception;
 use Inertia\Inertia;
 use App\Models\Product;
-use App\Models\Category;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -18,7 +17,6 @@ class ProductController extends Controller
                 'name' =>'required',
                 'price' =>'required',
                 'unit' =>'required',
-                'category_id' =>'required',
                 'image' =>'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
             ]);
 
@@ -26,7 +24,6 @@ class ProductController extends Controller
                 'name' => $request->name,
                 'price' => $request->price,
                 'unit' => $request->unit,
-                'category_id' => $request->category_id,
                 'user_id' => $user_id,
             ];
 
@@ -101,7 +98,6 @@ class ProductController extends Controller
         } catch (Exception $e) {
             return response()->json([
                 'status' => 'Failed',
-                // 'message' => "Product does not found"
                 'message' => $e->getMessage()
             ]);
         }
@@ -115,14 +111,12 @@ class ProductController extends Controller
                 'name' => 'required',
                 'price' => 'required',
                 'unit' => 'required',
-                'category_id' => 'required'
             ]);
 
             $product = Product::where('user_id', $user_id)->findOrFail($request->input('id'));
             $product->name = $request->input('name');
             $product->price = $request->input('price');
             $product->unit = $request->input('unit');
-            $product->category_id = $request->input('category_id');
 
             if($request->hasFile('image')){
                 if($product->image && file_exists(public_path($product->image))){
@@ -200,17 +194,15 @@ class ProductController extends Controller
     public function ProductPage(){
         $user_id = request()->header('id');
 
-        $products = Product::where('user_id', $user_id)->with('category')->latest()->get();
+        $products = Product::where('user_id', $user_id)->latest()->get();
         return Inertia::render('ProductPage', ['products' => $products]);
     }
 
     public function ProductSavePage(Request $request){
         $user_id = request()->header('id');
 
-        $categories = Category::where('user_id', $user_id)->get();
-
         $product = Product::where('id', $request->query('id'))->where('user_id', $user_id)->first();
 
-        return Inertia::render('ProductSavePage', ['categories' => $categories, 'product' => $product]);
+        return Inertia::render('ProductSavePage', ['product' => $product]);
     }
 }

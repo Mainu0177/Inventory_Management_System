@@ -69,6 +69,7 @@ const Header = ref([
     { text: 'Discount', value: 'discount' },
     { text: 'Vat', value: 'vat' },
     { text: 'Payable', value: 'payable' },
+    { text: 'poNumber', value: 'poNumber' },
     { text: 'Action', value: 'number' },
 
 ]);

@@ -10,6 +10,7 @@ class Customer extends Model
         'name',
         'email',
         'mobile',
+        'address',
         'user_id'
     ];
     public function products(){

@@ -48,6 +48,7 @@ const Header = [
     { text: 'Name', value: 'name' },
     { text: 'Email', value: 'email' },
     { text: 'Mobile', value: 'mobile' },
+    { text: 'Address', value: 'address' },
     { text: 'Action', value: 'number'}
 ];
 
@@ -55,7 +56,7 @@ const page = usePage();
 const Item = ref(page.props.customers);
 
 const searchValue = ref('');
-const searchField = ref(['name', 'email', 'mobile']);
+const searchField = ref(['name', 'email', 'mobile', 'address']);
 
 const DeleteClick = (id) => {
     let text = "Do you want to delete this customer?";
