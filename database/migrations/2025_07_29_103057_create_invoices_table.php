@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('discount', 50);
             $table->string('vat', 50);
             $table->string('poNumber', 50);
+            $table->string('prNumber', 50);
             $table->string('payable', 50);
 
             $table->unsignedBigInteger('user_id');

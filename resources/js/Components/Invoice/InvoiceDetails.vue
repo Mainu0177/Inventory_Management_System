@@ -60,7 +60,8 @@
                 <div class="col-12">
                 <p><strong>Total:</strong> {{ customer.total }} </p>
                 <p><strong>Payable:</strong> {{ customer.payable }} </p>
-                <p><strong>PO:</strong> {{ customer.poNumber }} </p>
+                <p><strong>PO NO:</strong> {{ customer.poNumber }} </p>
+                <p><strong>PR NO:</strong> {{ customer.prNumber }} </p>
                 <!-- <p><strong>VAT (5%):</strong> {{ customer.vat }}</p>
                             <p><strong>Discount:</strong> {{ customer.discount }}</p> -->
                 </div>

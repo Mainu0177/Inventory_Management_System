@@ -1,12 +1,14 @@
 <?php
 
-use App\Http\Controllers\CategoryController;
+
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SaleController;
+use App\Http\Controllers\DeliveryController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\BankingController;
 use App\Http\Middleware\SessionAuthenticate;
 use App\Http\Middleware\TokenVerificationMiddleware;
 use Inertia\Inertia;
@@ -35,18 +37,7 @@ Route::post('/reset-password', [UserController::class, 'ResetPassword'])->middle
 
 // Make Route group
 Route::middleware(SessionAuthenticate::class)->group(function () {
-    // Category all routes
-    Route::controller(CategoryController::class)->group(function () {
-        Route::post('/create-category', 'CreateCategory')->name('category.create');
-        Route::get('/list-category', 'ListCategory')->name('list.create');
-        Route::post('/category-details-by-id', 'CategoryDetailsById')->name('category.details');
-        Route::post('/update-category', 'UpdateCategory')->name('category.update');
-        // Route::delete('/delete-category', 'DeleteCategory')->name('category.delete');
-        Route::get('/delete-category/{id}', 'DeleteCategory')->name('category.delete');
 
-        Route::get('/categoryPage', 'CategoryPage')->name('category.page');
-        Route::get('/CategorySavePage', 'CategorySavePage')->name('CategorySavePage');
-    });
 
     // Product all routes
     Route::controller(ProductController::class)->group(function () {
@@ -55,6 +46,8 @@ Route::middleware(SessionAuthenticate::class)->group(function () {
         Route::post('/product-detail-by-id', 'ProductDetail')->name('product.detail.by.id');
         Route::post('/product-update', 'ProductUpdate')->name('product.update');
         Route::get('/product-delete/{id}', 'ProductDelete')->name('product.delete');
+        Route::post('/product-adjust-stock', 'AdjustStock')->name('product.adjust.stock');
+        Route::get('/product-inventory-logs', 'InventoryLogs')->name('product.inventory.logs');
 
         Route::get('/ProductPage', 'ProductPage')->name('productPage');
         Route::get('/ProductSavePage', 'productSavePage')->name('productSavePage');
@@ -68,6 +61,7 @@ Route::middleware(SessionAuthenticate::class)->group(function () {
         Route::post('/customer-detail-by-id', 'CustomerDetail')->name('customer.detail.by.id');
         Route::post('/customer-update', 'CustomerUpdate')->name('customer.update');
         Route::get('/customer-delete/{id}', 'CustomerDelete')->name('customer.delete');
+        Route::get('/customer-invoice-report', 'CustomerInvoiceReport')->name('customer.invoice.report');
 
         Route::get('/CustomerPage', 'CustomerPage')->name('CustomerPage');
         Route::get('/CustomerSavePage', 'CustomerSavePage')->name('CustomerSavePage');
@@ -77,12 +71,22 @@ Route::middleware(SessionAuthenticate::class)->group(function () {
     // Invoice all routes
     Route::controller(InvoiceController::class)->group(function () {
         Route::post('/create-invoice', 'CreateInvoice')->name('create.invoice');
+        Route::post('/update-invoice', 'UpdateInvoice')->name('invoice.update');
+        Route::post('/update-invoice-status', 'UpdateInvoiceStatus')->name('invoice.status');
+        Route::post('/invoice-create-delivery-challan', 'CreateDeliveryChallan')->name('invoice.challan');
         Route::get('/invoice-list', 'InvoiceList')->name('invoice.list');
         Route::post('/invoice-details', 'InvoiceDetails')->name('invoice.details');
         Route::get('/invoice-delete/{id}', 'InvoiceDelete')->name('invoice.delete');
 
         Route::get('/InvoiceListPage', 'InvoiceListPage')->name('InvoicePage');
         Route::get('/InvoiceSavePage', 'InvoiceSavePage')->name('InvoiceSavePage');
+    });
+
+    // Banking all routes
+    Route::controller(BankingController::class)->group(function () {
+        Route::get('/BankingPage', 'BankingPage')->name('BankingPage');
+        Route::post('/add-bank-account', 'AddBankAccount')->name('bank.account.add');
+        Route::post('/add-bank-transaction', 'AddTransaction')->name('bank.transaction.add');
     });
 
     // Dashboard Summary
@@ -95,9 +99,23 @@ Route::middleware(SessionAuthenticate::class)->group(function () {
 
 
     //sale all routes
-    Route::get('/create-sale', [SaleController::class, 'SalePage'])->name('sale.page');
+    Route::controller(SaleController::class)->group(function () {
+        Route::get('/create-sale', 'SalePage')->name('sale.page');
+        Route::post('/create-quotation', 'CreateQuotation')->name('quotation.create');
+        Route::post('/update-quotation', 'UpdateQuotation')->name('quotation.update');
+        Route::get('/delete-quotation/{id}', 'DeleteQuotation')->name('quotation.delete');
+        Route::post('/update-quotation-status', 'UpdateQuotationStatus')->name('quotation.status');
+        Route::post('/convert-to-invoice', 'ConvertToInvoice')->name('quotation.convert_invoice');
+    });
 
-
+    // Deliveries all routes
+    Route::controller(DeliveryController::class)->group(function () {
+        Route::get('/DeliveriesPage', 'DeliveriesPage')->name('deliveries.page');
+        Route::post('/create-delivery-challan', 'CreateDeliveryChallan')->name('challan.create');
+        Route::post('/update-delivery-challan', 'UpdateDeliveryChallan')->name('challan.update');
+        Route::get('/delete-delivery-challan/{id}', 'DeleteDeliveryChallan')->name('challan.delete');
+        Route::post('/mark-challan-delivered', 'MarkChallanDelivered')->name('challan.deliver');
+    });
 
 });
 
@@ -107,3 +125,4 @@ Route::get('/registration', [UserController::class, 'RegistrationPage'])->name('
 Route::get('/send-otp', [UserController::class, 'SendOtpPage'])->name('SendOtpPage');
 Route::get('/verify-otp', [UserController::class, 'VerifyOtpPage'])->name('VerifyOtpPage');
 Route::get('/reset-password', [UserController::class, 'ResetPasswordPage'])->name('ResetPasswordPage')->middleware([SessionAuthenticate::class]);
+

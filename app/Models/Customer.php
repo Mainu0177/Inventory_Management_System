@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Invoice;
 use Illuminate\Database\Eloquent\Model;
 
 class Customer extends Model
@@ -11,9 +12,14 @@ class Customer extends Model
         'email',
         'mobile',
         'address',
-        'user_id'
+        'contact_person',
+        'tax_id',
+        'shipping_address',
+        'user_id',
     ];
-    public function products(){
-        return $this->hasMany(Customer::class);
+
+    public function invoices()
+    {
+        return $this->hasMany(Invoice::class);
     }
 }

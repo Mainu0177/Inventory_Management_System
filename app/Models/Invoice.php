@@ -10,12 +10,18 @@ use Illuminate\Database\Eloquent\Model;
 class Invoice extends Model
 {
     protected $fillable = [
+        'invoice_no',
+        'quotation_no',
         'total',
         'discount',
         'vat',
         'payable',
         'poNumber',
+        'prNumber',
+        'status',
+        'paid_amount',
         'user_id',
+        'created_by',
         'customer_id'
     ];
 

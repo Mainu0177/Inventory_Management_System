@@ -10,9 +10,16 @@ class InvoiceProduct extends Model
     protected $fillable = [
         'invoice_id',
         'product_id',
-        'user_id',
+        'code',
+        'name',
+        'description',
+        'uom',
         'qty',
-        'sale_price'
+        'sale_price',
+        'margin',
+        'discount',
+        'total_price',
+        'user_id'
     ];
 
     public function product(){

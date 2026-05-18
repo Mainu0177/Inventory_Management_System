@@ -1,0 +1,52 @@
+<USER_REQUEST>
+You are a senior full-stack Laravel + Vue.js developer working on a production-grade application.
+
+Please carefully analyze the existing project before making any changes.
+
+Task:
+A new sidebar feature needs to be added named "Deliveries".
+
+Requirements:
+- Add a new sidebar menu item called "Deliveries"
+- It must be placed directly under the existing "Banking" menu item
+- The sidebar must follow the existing UI/UX design and navigation structure of the project
+
+I will provide a TSX/React code reference below. You must use it as a design and logic reference only.
+
+Your task:
+- Convert and implement the Deliveries feature properly in the existing Laravel + Vue.js project
+- Rewrite React/TSX logic into Vue.js (do NOT copy directly)
+- Ensure proper integration with existing routing and sidebar system
+
+Frontend requirements:
+- Implement using Vue.js (latest version)
+- Maintain clean, reusable, and modular components
+- Ensure responsive UI and consistent design with the rest of the project
+<truncated 49727 bytes>
+
+<USER_REQUEST>
+You are a senior full-stack Laravel + Vue.js developer working on a production-grade application.
+
+Please carefully analyze the existing project before making any changes.
+
+Task:
+A new sidebar feature needs to be added named "Deliveries".
+
+Requirements:
+- Add a new sidebar menu item called "Deliveries"
+- It must be placed directly under the existing "Banking" menu item
+- The sidebar must follow the existing UI/UX design and navigation structure of the project
+
+I will provide a TSX/React code reference below. You must use it as a design and logic reference only.
+
+Your task:
+- Convert and implement the Deliveries feature properly in the existing Laravel + Vue.js project
+- Rewrite React/TSX logic into Vue.js (do NOT copy directly)
+- Ensure proper integration with existing routing and sidebar system
+
+Frontend requirements:
+- Implement using Vue.js (latest version)
+- Maintain clean, reusable, and modular components
+- Ensure responsive UI and consistent design with the rest of the project
+<truncated 49718 bytes>
+
