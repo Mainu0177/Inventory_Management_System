@@ -117,6 +117,12 @@ Route::middleware(SessionAuthenticate::class)->group(function () {
         Route::post('/mark-challan-delivered', 'MarkChallanDelivered')->name('challan.deliver');
     });
 
+    // Expenses all routes
+    Route::controller(App\Http\Controllers\ExpenseController::class)->group(function () {
+        Route::get('/ExpensesPage', 'ExpensesPage')->name('expenses.page');
+        Route::post('/add-expense', 'AddExpense')->name('expense.add');
+    });
+
 });
 
 // Front end all route

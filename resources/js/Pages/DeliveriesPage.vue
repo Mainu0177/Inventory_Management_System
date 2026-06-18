@@ -1,6 +1,11 @@
 <template>
     <SideNavLayout>
-        <Deliveries :customers="customers" :quotations="quotations" :challans="challans" />
+        <Deliveries
+            :customers="customers"
+            :quotations="quotations"
+            :challans="challans"
+            :settings="settings"
+        />
     </SideNavLayout>
 </template>
 
@@ -9,11 +14,11 @@ import SideNavLayout from '../layout/SideNavLayout.vue';
 import Deliveries from '../Components/Delivery/Deliveries.vue';
 
 defineProps({
-    customers: Array,
+    customers:  Array,
     quotations: Array,
-    challans: Array
+    challans:   Array,
+    settings:   Object,
 });
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

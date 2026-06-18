@@ -56,6 +56,11 @@
                     <span class="side-nav__caption">Deliveries</span>
                 </Link>
 
+                <Link href="/ExpensesPage" class="side-nav__item" :class="{ 'side-nav__item--active': isActive('/ExpensesPage') }">
+                    <span class="side-nav__icon"><i class="fa fa-receipt"></i></span>
+                    <span class="side-nav__caption">Expenses</span>
+                </Link>
+
                 <Link href="/userProfilePage" class="side-nav__item" :class="{ 'side-nav__item--active': isActive('/userProfilePage') }">
                     <span class="side-nav__icon"><i class="fa fa-user-circle"></i></span>
                     <span class="side-nav__caption">Profile</span>

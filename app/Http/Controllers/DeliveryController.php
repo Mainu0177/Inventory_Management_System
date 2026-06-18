@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Exception;
 use Inertia\Inertia;
+use App\Models\User;
 use App\Models\Product;
 use App\Models\Customer;
 use App\Models\Quotation;
@@ -22,8 +23,19 @@ class DeliveryController extends Controller
     {
         $user_id = $request->header('id');
 
+        $user = User::find($user_id);
+
+        $settings = [
+            'name'    => $user?->name    ?? 'Factory Electric Solution',
+            'email'   => $user?->email   ?? '',
+            'contact' => $user?->phone   ?? '',
+            'address' => 'Dhaka, Bangladesh',
+            'taxId'   => '',
+            'logoUrl' => null,
+        ];
+
         $customers = Customer::where('user_id', $user_id)->get();
-        
+
         $quotations = Quotation::where('user_id', $user_id)
             ->with(['customer', 'quotationProducts.product'])
             ->orderBy('id', 'desc')
@@ -35,9 +47,10 @@ class DeliveryController extends Controller
             ->get();
 
         return Inertia::render('DeliveriesPage', [
+            'settings'  => $settings,
             'customers' => $customers,
             'quotations' => $quotations,
-            'challans' => $deliveryChallans
+            'challans'  => $deliveryChallans,
         ]);
     }
 
